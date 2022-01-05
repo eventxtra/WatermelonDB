@@ -36,9 +36,11 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getExtOrDefault('kotlinVersion')}"
+    implementation 'com.github.xelven:SqlParser-Android:1.0'
 }
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 

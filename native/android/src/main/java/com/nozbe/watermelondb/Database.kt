@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteCursor
 import android.database.sqlite.SQLiteCursorDriver
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteQuery
+import org.xelven.sqlparser.SQLParser
 import java.io.File
 
 class Database(
@@ -39,8 +40,11 @@ class Database(
             transaction {
                 // NOTE: This must NEVER be allowed to take user input - split by `;` is not grammar-aware
                 // and so is unsafe. Only works with Watermelon-generated strings known to be safe
-                statements.split(";").forEach {
-                    if (it.isNotBlank()) execute(it)
+                var parser = SQLParser()
+                parser.setUseScriptDetecting(true)
+                parser.parseScript(statements)
+                parser.getStatements().forEach {
+                    if (it.sql.isNotBlank()) execute(it.sql)
                 }
             }
 

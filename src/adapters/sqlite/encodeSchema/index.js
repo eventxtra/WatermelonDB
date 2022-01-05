@@ -171,7 +171,7 @@ const encodeFTSTable: ({
   ftsColumns
 }) => {
   const columnsSQL = ftsColumns.map((column) => `"${column.name}"`).join(', ')
-  return `create virtual table "${ftsTableName}" using fts5(${columnsSQL});`
+  return `create virtual table "${ftsTableName}" using fts4(${columnsSQL});`
 }
 
 const encodeFTSSearch: (TableSchema) => SQL = (tableSchema) => {
@@ -258,7 +258,7 @@ const encodeAddColumnsMigrationStep: (AddColumnsMigrationStep) => SQL = ({
       !column.isFTS,
       '[DB][Worker] Support for migrations with isFTS is still to be implemented',
     )
-    
+
     return (unsafeSql || identity)(addColumn + setDefaultValue + addIndex)
   })
   .join('')
